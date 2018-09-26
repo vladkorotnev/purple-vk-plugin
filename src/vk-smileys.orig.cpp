@@ -1,8 +1,7 @@
 #include <fstream>
 #include <glib.h>
 #include <util.h>
-#include <stdio.h>
-#include <stdlib.h>
+
 #include <cpputils/trie.h>
 
 #include "miscutils.h"
@@ -207,28 +206,9 @@ void convert_outgoing_smileys(string& message)
             index++;
             continue;
         }
-		if(ascii_len == 1) {
-			// Seems it's an emoji, pass-through
-			message.replace(index, ascii_len, *unicode);
-			index += unicode->length();
-		} else {
-			string ascii = message.substr(index, ascii_len);
-			
-			string htmlentity = "";
-			
-			for(size_t i = 0; i < ascii.length(); i++) {
-				htmlentity = htmlentity + "&#";
-				char cur = ascii.at(i);
-				char intStr[10];
-				sprintf(intStr, "%d", cur);
-				htmlentity = htmlentity + string(intStr);
-				htmlentity = htmlentity + ";";
-			}
-			
-			message.replace(index, ascii_len, htmlentity);
-			index += htmlentity.length();
-		}
-        
+
+        message.replace(index, ascii_len, *unicode);
+        index += unicode->length();
     }
 }
 
